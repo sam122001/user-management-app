@@ -12,6 +12,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  console.log('test')
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<JwtPayload | null>(null);  // Same change here
   console.log("isAuthenticated", isAuthenticated)
@@ -21,11 +22,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      const decoded = jwtDecode<JwtPayload>(token);  // Explicitly define the type here
-      setUser(decoded);
-      setIsAuthenticated(true);
+      const decoded = jwtDecode<JwtPayload>(token);
+      const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+      if (decoded.exp && decoded.exp < currentTime) {
+        logout(); // Token is expired; log the user out
+      } else {
+        setUser(decoded);
+        setIsAuthenticated(true);
+      }
     }
   }, []);
+  
 
   const login = (token: string) => {
     localStorage.setItem('token', token);

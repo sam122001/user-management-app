@@ -58,13 +58,20 @@ export function Analytics() {
           date,
           users: activityCounts[date],
         }));
+        console.log("activityData", activityData)
   
         // Sort the activity data by date in descending order (latest on the right)
         const sortedActivityData = activityData.sort((a, b) => {
-          const dateA = new Date(a.date).getTime();
-          const dateB = new Date(b.date).getTime();
-          return dateA - dateB; // ascending order: earliest to latest
-        });
+          const parseDate = (dateString: string) => {
+            const [day, month, year] = dateString.split('/').map(Number); // Split "DD/MM/YYYY" and convert to numbers
+            return new Date(year, month - 1, day).getTime(); // Create a proper Date object
+          };
+        
+          const dateA = parseDate(a.date);
+          const dateB = parseDate(b.date);
+        
+          return dateA - dateB; // Ascending order: earliest to latest
+        });     
   
         console.log('sortedActivityData', sortedActivityData);
   

@@ -1,25 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, BarChart2, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, BarChart2, LogOut, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
-   console.log('test')
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State to track sidebar visibility
+  console.log("layout test")
+
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  // Toggle sidebar visibility
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="flex h-screen">
         {/* Sidebar */}
-        <div className="w-64 bg-white shadow-lg">
+        <div
+          className={`transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-16'} bg-white shadow-lg`}
+        >
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-center h-16 border-b">
-              <h1 className="text-xl font-bold text-gray-800">Dashboard</h1>
+            <div className="flex items-center justify-between h-16 border-b px-4">
+              <h1
+                className={`text-xl font-bold text-gray-800 transition-all duration-300 ${
+                  isSidebarOpen ? 'block' : 'hidden'
+                }`}
+              >
+                Dashboard
+              </h1>
+              <button
+                onClick={toggleSidebar}
+                className="text-gray-600 hover:text-gray-800 focus:outline-none"
+              >
+                {isSidebarOpen ? (
+                  <ChevronLeft className="w-6 h-6" />
+                ) : (
+                  <ChevronRight className="w-6 h-6" />
+                )}
+              </button>
             </div>
             <nav className="flex-1 p-4">
               <ul className="space-y-2">
@@ -29,7 +55,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                     className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
                   >
                     <LayoutDashboard className="w-5 h-5 mr-3" />
-                    Overview
+                    {isSidebarOpen && 'Overview'}
                   </Link>
                 </li>
                 <li>
@@ -38,7 +64,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                     className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
                   >
                     <Users className="w-5 h-5 mr-3" />
-                    Users
+                    {isSidebarOpen && 'Users'}
                   </Link>
                 </li>
                 <li>
@@ -47,7 +73,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                     className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
                   >
                     <BarChart2 className="w-5 h-5 mr-3" />
-                    Analytics
+                    {isSidebarOpen && 'Analytics'}
                   </Link>
                 </li>
               </ul>
@@ -58,7 +84,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg w-full"
               >
                 <LogOut className="w-5 h-5 mr-3" />
-                Logout
+                {isSidebarOpen && 'Logout'}
               </button>
             </div>
           </div>
@@ -69,6 +95,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           <main className="p-6">{children}</main>
         </div>
       </div>
+
     </div>
   );
 }
