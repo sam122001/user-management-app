@@ -12,7 +12,7 @@ interface User {
   status: 'active' | 'inactive';
 }
 
-export function Users() {
+export default function Users() {
   const [users, setUsers] = useState<User[]>();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);

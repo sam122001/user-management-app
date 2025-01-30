@@ -1,20 +1,15 @@
 import React from 'react';
-import { LoginForm } from '../components/LoginForm';
 import { RegisterForm } from '../components/RegisterForm';
 
 export function Register() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-teal-500 py-12 sm:px-6 lg:px-8">
+      <div className="sm:w-full sm:max-w-md bg-white p-8 rounded-lg shadow-lg">
+        <h2 className="text-center text-4xl font-bold text-gray-800 mb-6">
+          Create account
         </h2>
-      </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <RegisterForm />
-        </div>
+        <RegisterForm />
       </div>
     </div>
   );

@@ -26,10 +26,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else {
         setUser(decoded);
         setIsAuthenticated(true);
-        console.log('token')
       }
     }
-  }, []);
+  }, [isAuthenticated]);
   
 
   const login = (token: string) => {
