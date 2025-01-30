@@ -12,13 +12,10 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  console.log('test')
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<JwtPayload | null>(null);  // Same change here
-  console.log("isAuthenticated", isAuthenticated)
+ 
   
-
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -29,6 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else {
         setUser(decoded);
         setIsAuthenticated(true);
+        console.log('token')
       }
     }
   }, []);
