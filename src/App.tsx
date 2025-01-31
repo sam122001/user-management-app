@@ -3,15 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
-import { Users } from './pages/Users';
+import Users from './pages/Users';
 import { Analytics } from './pages/Analytics';
 import { DashboardLayout } from './components/DashboardLayout';
 import { Register } from './pages/Register';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAuth();
-  console.log("isAuth", isAuthenticated)
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  const token = localStorage.getItem('token');
+  return token ? children : <Navigate to="/login" />;
 }
 
 function App() {
