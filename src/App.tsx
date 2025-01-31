@@ -10,7 +10,7 @@ import { Register } from './pages/Register';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem('token');
-  return token ? children : <Navigate to="/" />;
+  return token ? children : <Navigate to="/login" />;
 }
 
 function App() {

@@ -23,8 +23,7 @@ interface UserRole {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
 
 export function Analytics() {
-  const [userRolesData, setUserRolesData] = useState<UserRole[]>([]); // Updated to UserRole[]
-  console.log('userRolesData', userRolesData)
+  const [userRolesData, setUserRolesData] = useState<UserRole[]>([]); 
   const token = localStorage.getItem('token');
   const [userActivityData, setUserActivityData] = useState<{ date: string; users: number }[]>([]);
 
@@ -37,7 +36,6 @@ export function Analytics() {
             'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
           }
         });
-        console.log('response', response);
         const users = response.data;
   
         // Format dates to group users by day
@@ -53,18 +51,15 @@ export function Analytics() {
           activityCounts[formattedDate]++;
         });
   
-        // Convert the activityCounts object to an array of objects for the chart
         const activityData = Object.keys(activityCounts).map(date => ({
           date,
           users: activityCounts[date],
         }));
-        console.log("activityData", activityData)
   
-        // Sort the activity data by date in descending order (latest on the right)
         const sortedActivityData = activityData.sort((a, b) => {
           const parseDate = (dateString: string) => {
-            const [day, month, year] = dateString.split('/').map(Number); // Split "DD/MM/YYYY" and convert to numbers
-            return new Date(year, month - 1, day).getTime(); // Create a proper Date object
+            const [day, month, year] = dateString.split('/').map(Number); 
+            return new Date(year, month - 1, day).getTime(); 
           };
         
           const dateA = parseDate(a.date);
@@ -73,7 +68,6 @@ export function Analytics() {
           return dateA - dateB; // Ascending order: earliest to latest
         });     
   
-        console.log('sortedActivityData', sortedActivityData);
   
         // Update the user activity data state
         setUserActivityData(sortedActivityData);

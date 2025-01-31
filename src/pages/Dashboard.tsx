@@ -72,7 +72,6 @@ const [errorMessage, setErrorMessage] = useState<string | null>(null);
     setSuccessMessage(null); // Clear previous success messages
   
     try {
-      console.log('apihit');
       await axios.post('http://localhost:5000/api/csv/upload', formData, {
         headers: {
           'Authorization': `Bearer ${token}`, // Include the token in the Authorization header

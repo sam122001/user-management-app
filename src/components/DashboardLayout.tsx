@@ -6,8 +6,7 @@ import { LayoutDashboard, Users, BarChart2, LogOut, ChevronLeft, ChevronRight } 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State to track sidebar visibility
-  console.log("layout test")
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
 
   const handleLogout = () => {
     logout();

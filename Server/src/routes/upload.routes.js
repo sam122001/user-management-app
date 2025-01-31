@@ -28,7 +28,6 @@ const upload = multer({
 
 // Upload endpoint
 router.post('/upload', upload.single('file'), async (req, res) => {
-  console.log('CSV API hit');
 
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
@@ -68,7 +67,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     res.json({ message: 'File uploaded and processed successfully', data: results });
   } catch (error) {
     console.error('Error processing file:', error);
-    res.status(500).json({ error: 'Error processing CSV file. Ensure it is correctly formatted.' });
+    res.status(400).json({ error: 'Error processing CSV file. Ensure it is correctly formatted.' });
   }
 });
 

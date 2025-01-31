@@ -35,12 +35,10 @@ router.post('/register', validateRegistration, async (req, res) => {
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
     const match = await bcrypt.compare(password, hashedPassword);
-    console.log(match, "match----")
 
 
     // Create new user with hashed password
     const user = new User({ username, email, password: hashedPassword });
-    console.log('user-----', user)
     await user.save();
 
     // Create activity log
@@ -109,7 +107,6 @@ router.post('/login', async (req, res) => {
       process.env.JWT_SECRET || 'your-very-secure-fallback-secret-key',
       { expiresIn: '1h' } 
     );
-    console.log(token, "token")
 
     // Respond with token and user details
     res.json({
